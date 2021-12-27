@@ -71,7 +71,6 @@ typedef struct{
 
 
 	void init(void);
-	// void build(App *app_);
 	void kill(void);
 
 }Entity;

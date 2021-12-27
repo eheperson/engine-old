@@ -41,7 +41,6 @@ int main(){
     InputHandler handler;
 
     
-    
     while(1){
         app.prepareScene();
         handler.doInput();
@@ -100,6 +99,8 @@ int main(){
 
         SDL_Delay(16);
     }
+    player.kill();
+    bullet.kill();
     app.kill();
     return 0;
 }

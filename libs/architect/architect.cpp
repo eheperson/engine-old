@@ -5,6 +5,7 @@ void architectTest(void){
 }
 
 void App :: init(void){
+	cout << "app initialized." << endl;
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		exit(1);
@@ -36,6 +37,7 @@ void App :: prepareScene(){
 };
 
 void App :: build(void){
+	cout << "app builded." << endl;
 	// create our window using SDL_CreateWindow
 	window = SDL_CreateWindow(
 		appName,
@@ -59,8 +61,6 @@ void App :: build(void){
 };
 
 void App ::  kill(){
-	// IMG_Quit();
-
 	//Destroy the renderer created above
 	SDL_DestroyRenderer(renderer);
 
@@ -69,9 +69,12 @@ void App ::  kill(){
 
 	//Close all the systems of SDL initialized at the top
 	SDL_Quit();
+	cout << " app killed." << endl;
 };
 
 void Entity :: init(void){
+	cout  << " entity initialized" << endl;
+	// initialize SLD_IMG
 	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 	entityName = "enivicivokki";
 	imgPath = "enivicivokki";
@@ -86,3 +89,8 @@ void Entity :: init(void){
 	texture = NULL;
 };
 
+void Entity :: kill(void){
+	// quit SDL_Image
+	cout << " entity killed." << endl;
+	IMG_Quit();
+};
