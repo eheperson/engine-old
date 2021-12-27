@@ -1,0 +1,12 @@
+/* 
+    the configured options and settings
+    when cmake configures this header file the values for the 
+    @engine_VERSION_MAJOR@
+    @engine_VERSION_MINOR@
+    @engine_VERSION_PATCH@
+    will be replaced
+*/
+#define engine_VERSION_MAJOR @engine_VERSION_MAJOR@
+#define engine_VERSION_MINOR @engine_VERSION_MINOR@
+#define engine_VERSION_PATCH @engine_VERSION_PATCH@
+
