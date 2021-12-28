@@ -18,6 +18,7 @@ int main(){
     app.build();
 
     Entity player;
+	memset(&player, 0, sizeof(Entity));
     player.init();
     player.entityName = "player";
     player.imgPath = "./gfx/player.png";
@@ -39,62 +40,93 @@ int main(){
 
 
     InputHandler handler;
-
+    long then;
+    float remainder;
     
+    
+    EntityList playerList;
+    memset(&playerList,0, sizeof(EntityList));
+    playerList.entity_ = &player;
+    playerList.init();
+
+    EntityList bulletList;
+    memset(&bulletList,0, sizeof(EntityList));
+    bulletList.entity_ = &bullet;
+    bulletList.init();
+
     while(1){
         app.prepareScene();
         handler.doInput();
         
-        player.x += player.dx;
-		player.y += player.dy;
+        /* --------- DoPlayer() - Begin ------------ */
+        player.dx = 0;
+	    player.dy = 0;
+        
+        if(player.reload > 0)
+		    player.reload--;
 
         if (handler.keyboard[SDL_SCANCODE_UP]){
-            player.y -= 4;
+            player.dy -= 4;
             cout << "up" << endl;
         }
 
         if (handler.keyboard[SDL_SCANCODE_DOWN]){
-            player.y += 4;
+            player.dy += 4;
             cout << "down" << endl;
         };
 
         if (handler.keyboard[SDL_SCANCODE_LEFT]){
-            player.x -= 4;
+            player.dx -= 4;
             cout << "left" << endl;
         };
 
         if (handler.keyboard[SDL_SCANCODE_RIGHT]){
-            player.x += 4;
+            player.dx += 4;
             cout << "right" << endl;
         };
 
-        if (handler.keyboard[SDL_SCANCODE_Q] && bullet.health == 0 ){
+        if (handler.keyboard[SDL_SCANCODE_Q] && player.reload == 0 ){
             cout << "fire" << endl;
-            player.fire=1;
+            // player.fire=1;
+            fireBullets(&player, &bullet, &bulletList);
         }
-        else
-            player.fire=0;
+        // else
+        //     player.fire=0;
 
-        if (player.fire && bullet.health == 0){
-			bullet.x = player.x;
-			bullet.y = player.y;
-			bullet.dx = 16;
-			bullet.dy = 0;
-			bullet.health = 1;
-		}
+        player.x += player.dx;
+		player.y += player.dy;
+        /* --------- DoPlayer() - End ------------ */
+        doBullets(&bulletList);
+        /* --------- DoBullets() - Begin ------------ */
 
-		bullet.x += bullet.dx;
-		bullet.y += bullet.dy;
 
-		if (bullet.x > app.screenWidth){
-			bullet.health = 0;
-		}
+        // if (player.fire && bullet.health == 0){
+		// 	bullet.x = player.x;
+		// 	bullet.y = player.y;
+		// 	bullet.dx = 16;
+		// 	bullet.dy = 0;
+		// 	bullet.health = 1;
+		// }
 
+		// bullet.x += bullet.dx;
+		// bullet.y += bullet.dy;
+
+		// if (bullet.x > app.screenWidth){
+		// 	bullet.health = 0;
+		// }
+        
+        /* --------- DrawPlayer() - Begin ------------ */
         blit(&player, &app);
+        /* --------- DrawPlayer() - End ------------ */
+
+
+        /* --------- DrawBullets() - Begin ------------ */
+        drawBullets(&bulletList, &app);
+        /* --------- DrawBullets() - End ------------ */
     	
-        if (bullet.health > 0){
-			blit(&bullet, &app);
-		}
+        // if (bullet.health > 0){
+		// 	blit(&bullet, &app);
+		// }
         app.presentScene();
 
         SDL_Delay(16);

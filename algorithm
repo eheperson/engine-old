@@ -30,113 +30,113 @@ initStage();
 
 main logic():
 
-    prepareScene();
-        SDL_SetRenderDrawColor(app.renderer, 32, 32, 32, 255);
-	    SDL_RenderClear(app.renderer);
+    // prepareScene();
+    //     SDL_SetRenderDrawColor(app.renderer, 32, 32, 32, 255);
+	//     SDL_RenderClear(app.renderer);
 
-    doInput();
-        SDL_Event event;
+    // doInput();
+    //     SDL_Event event;
         
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                    exit(0);
-                    break;
+    //     while (SDL_PollEvent(&event))
+    //     {
+    //         switch (event.type)
+    //         {
+    //             case SDL_QUIT:
+    //                 exit(0);
+    //                 break;
                     
-                case SDL_KEYDOWN:
-                    doKeyDown(&event.key);
-                    break;
+    //             case SDL_KEYDOWN:
+    //                 doKeyDown(&event.key);
+    //                 break;
                     
-                case SDL_KEYUP:
-                    doKeyUp(&event.key);
-                    break;
+    //             case SDL_KEYUP:
+    //                 doKeyUp(&event.key);
+    //                 break;
 
-                default:
-                    break;
-            }
-        }
+    //             default:
+    //                 break;
+    //         }
+    //     }
     
     app.delegate.logic();
 
-    	doPlayer();
-            player->dx = player->dy = 0;
+    	// doPlayer();
+        //     player->dx = player->dy = 0;
 	
-            if (player->reload > 0)
-            {
-                player->reload--;
-            }
+        //     if (player->reload > 0)
+        //     {
+        //         player->reload--;
+        //     }
             
-            if (app.keyboard[SDL_SCANCODE_UP])
-            {
-                player->dy = -PLAYER_SPEED;
-            }
+        //     if (app.keyboard[SDL_SCANCODE_UP])
+        //     {
+        //         player->dy = -PLAYER_SPEED;
+        //     }
             
-            if (app.keyboard[SDL_SCANCODE_DOWN])
-            {
-                player->dy = PLAYER_SPEED;
-            }
+        //     if (app.keyboard[SDL_SCANCODE_DOWN])
+        //     {
+        //         player->dy = PLAYER_SPEED;
+        //     }
             
-            if (app.keyboard[SDL_SCANCODE_LEFT])
-            {
-                player->dx = -PLAYER_SPEED;
-            }
+        //     if (app.keyboard[SDL_SCANCODE_LEFT])
+        //     {
+        //         player->dx = -PLAYER_SPEED;
+        //     }
             
-            if (app.keyboard[SDL_SCANCODE_RIGHT])
-            {
-                player->dx = PLAYER_SPEED;
-            }
+        //     if (app.keyboard[SDL_SCANCODE_RIGHT])
+        //     {
+        //         player->dx = PLAYER_SPEED;
+        //     }
             
-            if (app.keyboard[SDL_SCANCODE_LCTRL] && player->reload == 0)
-            {
-                fireBullet();
-                    Entity *bullet;
+        //     if (app.keyboard[SDL_SCANCODE_LCTRL] && player->reload == 0)
+        //     {
+        //         fireBullet();
+        //             Entity *bullet;
 	
-                    bullet = malloc(sizeof(Entity));
-                    memset(bullet, 0, sizeof(Entity));
-                    stage.bulletTail->next = bullet;
-                    stage.bulletTail = bullet;
+        //             bullet = malloc(sizeof(Entity));
+        //             memset(bullet, 0, sizeof(Entity));
+        //             stage.bulletTail->next = bullet;
+        //             stage.bulletTail = bullet;
                     
-                    bullet->x = player->x;
-                    bullet->y = player->y;
-                    bullet->dx = PLAYER_BULLET_SPEED;
-                    bullet->health = 1;
-                    bullet->texture = bulletTexture;
-                    SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet->w, &bullet->h);
+        //             bullet->x = player->x;
+        //             bullet->y = player->y;
+        //             bullet->dx = PLAYER_BULLET_SPEED;
+        //             bullet->health = 1;
+        //             bullet->texture = bulletTexture;
+        //             SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet->w, &bullet->h);
                     
-                    bullet->y += (player->h / 2) - (bullet->h / 2);
+        //             bullet->y += (player->h / 2) - (bullet->h / 2);
                     
-                    player->reload = 8;
-            }
+        //             player->reload = 8;
+        //     }
             
-            player->x += player->dx;
-            player->y += player->dy;
+        //     player->x += player->dx;
+        //     player->y += player->dy;
 
-	    doBullets();
-            Entity *b, *prev;
+	    // doBullets();
+        //     Entity *b, *prev;
 	
-            prev = &stage.bulletHead;
+        //     prev = &stage.bulletHead;
             
-            for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
-            {
-                b->x += b->dx;
-                b->y += b->dy;
+        //     for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
+        //     {
+        //         b->x += b->dx;
+        //         b->y += b->dy;
                 
-                if (b->x > SCREEN_WIDTH)
-                {
-                    if (b == stage.bulletTail)
-                    {
-                        stage.bulletTail = prev;
-                    }
+        //         if (b->x > SCREEN_WIDTH)
+        //         {
+        //             if (b == stage.bulletTail)
+        //             {
+        //                 stage.bulletTail = prev;
+        //             }
                     
-                    prev->next = b->next;
-                    free(b);
-                    b = prev;
-                }
+        //             prev->next = b->next;
+        //             free(b);
+        //             b = prev;
+        //         }
                 
-                prev = b;
-            }
+        //         prev = b;
+        //     }
 
     app.delegate.draw();
         drawPlayer();

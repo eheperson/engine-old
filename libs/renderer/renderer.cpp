@@ -22,4 +22,4 @@ void blit(Entity *entity_, App *app_){
     SDL_QueryTexture(entity_->texture, NULL, NULL, &dest.w, &dest.h);
 
 	SDL_RenderCopy(app_->renderer, entity_->texture, NULL, &dest);
-}
+};

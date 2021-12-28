@@ -94,3 +94,72 @@ void Entity :: kill(void){
 	cout << " entity killed." << endl;
 	IMG_Quit();
 };
+
+void EntityList :: init(void){
+	tail = &head;
+};
+
+
+void fireBullets(Entity *player_, Entity *bullet_, EntityList *blist_){
+	Entity *bullet;
+
+	bullet = (Entity *)malloc(sizeof(Entity));
+	memset(bullet, 0, sizeof(Entity));
+	blist_->tail->next = bullet;
+
+	blist_->tail = bullet;
+
+	bullet->x = player_->x;
+
+	bullet->y = player_->y;
+
+	bullet->dx = 16;
+
+	bullet->health=1;
+
+	bullet->texture = bullet_->texture;
+
+	bullet->w=30;
+	bullet->h=30;
+
+	SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet->w, &bullet->h);
+
+	bullet->y += (player_->h / 2) - (bullet->h / 2);
+
+	player_->reload = 8;
+
+};
+
+void doBullets(EntityList *blist_){
+	Entity *b;
+	
+	Entity *prev;
+
+	prev = &(blist_->head);
+
+	for(b = (blist_->head).next; b != NULL; b = b->next){
+		b->x += b->dx;
+		b->y += b->dy;
+
+		if( b->x > 1280){
+			if(b == blist_->tail)
+				blist_->tail = prev;
+
+			prev->next = b->next;
+			free(b);
+			b = prev;
+		};
+
+		prev = b;
+	};
+	cout << "doBullets end" << endl;
+
+
+};
+
+void drawBullets(EntityList *blist_, App *app_){
+	Entity *b;
+	for(b = blist_->head.next; b != NULL; b = b->next){
+		blit(b, app_);
+	};
+}

@@ -52,7 +52,8 @@ typedef struct{
 	void kill(void);
 }App;
 
-typedef struct{
+typedef struct Entity Entity;
+struct Entity{
 	char *entityName;
 	char *imgPath;
 
@@ -68,15 +69,31 @@ typedef struct{
 
 	int fire;
 	int health;
+	int reload;
 
+	Entity *next;
 
 	void init(void);
 	void kill(void);
 
-}Entity;
+};
 
+
+typedef struct{
+	Entity *entity_;
+	Entity head;
+	Entity *tail;
+	
+	void init(void);
+}EntityList;
 
 extern SDL_Texture *loadTexture(char *filename, App *app_);
+extern void blit(Entity *entity_, App *app_);
+
+void fireBullets(Entity *player_, Entity *bullet_, EntityList *blist_);
+void doBullets(EntityList *blist_);
+
+void drawBullets(EntityList *blist_, App *app_);
 
 
 #endif
