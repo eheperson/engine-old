@@ -99,15 +99,35 @@ void EntityList :: init(void){
 	tail = &head;
 };
 
+void EntityList :: insert(int x_, int y_, int w_, int h_){
+
+	Entity *bulletTemp;
+	// bulletTemp = (Entity *)malloc(sizeof(Entity));
+	memset(&bulletTemp, 0, sizeof(Entity));
+
+	this->tail->next = bulletTemp;
+	this->tail = bulletTemp;
+	bulletTemp->x = x_;
+	bulletTemp->y = y_;
+	bulletTemp->w = w_;
+	bulletTemp->h = h_;
+
+	bulletTemp->dx = entity_->dx;
+	bulletTemp->health = entity_->health;
+	bulletTemp->texture = entity_->texture;
+
+	SDL_QueryTexture(bulletTemp->texture, NULL, NULL, &bulletTemp->w, &bulletTemp->h);
+};
+
 
 void fireBullets(Entity *player_, Entity *bullet_, EntityList *blist_){
-	Entity *bullet;
+	Entity *bullet; //ok
 
-	bullet = (Entity *)malloc(sizeof(Entity));
-	memset(bullet, 0, sizeof(Entity));
-	blist_->tail->next = bullet;
+	bullet = (Entity *)malloc(sizeof(Entity)); //ok
+	memset(bullet, 0, sizeof(Entity)); // ok
+	blist_->tail->next = bullet; // ok
 
-	blist_->tail = bullet;
+	blist_->tail = bullet; //ok
 
 	bullet->x = player_->x;
 
@@ -122,7 +142,7 @@ void fireBullets(Entity *player_, Entity *bullet_, EntityList *blist_){
 	bullet->w=30;
 	bullet->h=30;
 
-	SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet->w, &bullet->h);
+	SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet_->w, &bullet_->h);
 
 	bullet->y += (player_->h / 2) - (bullet->h / 2);
 

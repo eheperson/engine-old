@@ -31,9 +31,10 @@ int main(){
 
     Entity bullet;
     bullet.init();
-    bullet.health = 0;
+    bullet.health = 1;
     bullet.w = 30;
     bullet.h = 30;
+    bullet.dx = 16;
     bullet.entityName = "bullet";
     bullet.imgPath = "./gfx/playerBullet.png";
     bullet.texture = loadTexture(&bullet, &app);
@@ -44,10 +45,10 @@ int main(){
     float remainder;
     
     
-    EntityList playerList;
-    memset(&playerList,0, sizeof(EntityList));
-    playerList.entity_ = &player;
-    playerList.init();
+    // EntityList playerList;
+    // memset(&playerList,0, sizeof(EntityList));
+    // playerList.entity_ = &player;
+    // playerList.init();
 
     EntityList bulletList;
     memset(&bulletList,0, sizeof(EntityList));
@@ -88,7 +89,15 @@ int main(){
         if (handler.keyboard[SDL_SCANCODE_Q] && player.reload == 0 ){
             cout << "fire" << endl;
             // player.fire=1;
-            fireBullets(&player, &bullet, &bulletList);
+            // fireBullets(&player, &bullet, &bulletList);
+
+            int bullety = (player.h / 2) - (bullet.h / 2);
+            int bulletx = player.x;
+            int bulletw = bullet.w;
+            int bulleth = bullet.h;
+
+            bulletList.insert(bulletx, bullety, bulletw, bulleth);
+            player.reload = 8;
         }
         // else
         //     player.fire=0;

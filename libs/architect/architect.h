@@ -75,17 +75,17 @@ struct Entity{
 
 	void init(void);
 	void kill(void);
-
 };
 
-
-typedef struct{
+typedef struct EntityList EntityList;
+struct EntityList{
 	Entity *entity_;
 	Entity head;
 	Entity *tail;
 	
 	void init(void);
-}EntityList;
+	void insert(int x_, int y_, int w_, int h_);
+};
 
 extern SDL_Texture *loadTexture(char *filename, App *app_);
 extern void blit(Entity *entity_, App *app_);
